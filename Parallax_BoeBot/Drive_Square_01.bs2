@@ -1,0 +1,60 @@
+' {$STAMP BS2}
+' {$PBASIC 2.5}
+
+DEBUG "Program running!", CR
+
+counter VAR    Word
+
+FREQOUT 4, 2000, 3000
+
+GOSUB Forward
+GOSUB Left
+GOSUB Forward
+GOSUB Right
+GOSUB Backward
+GOSUB Left
+GOSUB Backward
+GOSUB Right
+
+FREQOUT 4, 2000, 3000
+
+DEBUG "Program END!", CR
+
+END
+
+Forward:
+  FOR counter = 1 TO 64
+    PULSOUT 13, 850
+    PULSOUT 12, 650
+    PAUSE 20
+  NEXT
+  PAUSE 200
+  RETURN
+
+Left:
+  FOR counter = 1 TO 24
+    PULSOUT 13, 650
+    PULSOUT 12, 650
+    PAUSE 20
+  NEXT
+  PAUSE 200
+  RETURN
+
+Right:
+  FOR counter = 1 TO 24
+    PULSOUT 13, 850
+    PULSOUT 12, 850
+    PAUSE 20
+  NEXT
+  PAUSE 200
+  RETURN
+
+Backward:
+  FOR counter = 1 TO 64
+    PULSOUT 13, 650
+    PULSOUT 12, 850
+    PAUSE 20
+  NEXT
+  RETURN
+
+

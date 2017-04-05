@@ -1,0 +1,64 @@
+' {$STAMP BS2}
+' {$PBASIC 2.5}
+
+DEBUG "Program Running.", CR
+
+pulseCount     VAR        Word
+address        VAR        Byte
+instruction    VAR        Byte
+
+'     Address: 0123456789
+'              ||||||||||
+
+DATA          "FLFFRBLBBQ"
+
+FREQOUT 4, 2000, 3000
+
+DO UNTIL (instruction="Q")
+  READ address, instruction
+  address=address+1
+
+  SELECT instruction
+    CASE "F": GOSUB Froward
+    CASE "B": GOSUB Backward
+    CASE "L": GOSUB Left_Turn
+    CASE "R": GOSUB Right_Turn
+  ENDSELECT
+LOOP
+
+DEBUG "Program Finished.", CR
+
+END
+
+Froward:
+  FOR pulseCount=1 TO 64
+    PULSOUT 13, 850
+    PULSOUT 12, 650
+    PAUSE 20
+  NEXT
+  RETURN
+
+Backward:
+  FOR pulseCount=1 TO 64
+    PULSOUT 13, 650
+    PULSOUT 12, 850
+    PAUSE 20
+  NEXT
+  RETURN
+
+Left_Turn:
+  FOR pulseCount=1 TO 24
+    PULSOUT 13, 650
+    PULSOUT 12, 650
+    PAUSE 20
+  NEXT
+  RETURN
+
+Right_Turn:
+  FOR pulseCount=1 TO 24
+    PULSOUT 13, 850
+    PULSOUT 12, 850
+    PAUSE 20
+  NEXT
+  RETURN
+

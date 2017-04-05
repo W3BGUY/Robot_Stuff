@@ -1,0 +1,41 @@
+' {$STAMP BS2}
+' {$PBASIC 2.5}
+
+DEBUG "Program Running!"
+
+counter        VAR  Word
+pulseCount     VAR  Word
+addressOffset  VAR  Word
+instruction    VAR  Word
+pulseRight     VAR  Word
+pulseLeft      VAR  Word
+
+DEBUG "Program Finished!"
+
+' addressOffset       0         2         4         6         8
+Pulses_Count  DATA    Word 64,  Word 24,  Word 24,  Word 64,  Word 0
+Pulses_Left   DATA    Word 850, Word 650, Word 850, Word 650
+Pulses_Right  DATA    Word 650, Word 650, Word 850, Word 850
+
+' ---
+
+FREQOUT 4, 2000, 3000
+
+' ---
+
+DO
+  READ Pulses_Count + addressOffset, Word pulseCount
+  READ Pulses_Left + addressOffset, Word pulseLeft
+  READ Pulses_Right + addressOffset, Word pulseRight
+
+  addressOffset=addressOffset+2
+
+  FOR counter=1 TO pulseCount
+    PULSOUT 13, pulseLeft
+    PULSOUT 12, pulseRight
+    PAUSE 20
+  NEXT
+
+LOOP UNTIL (pulseCount=0)
+
+END
